@@ -1,5 +1,7 @@
 all:
-	cd srcs && sudo docker-compose --verbose up -d --build
+	mkdir -p /home/vkerob/data/wordpress \
+	&& mkdir -p /home/vkerob/data/mariadb \
+	&& cd srcs && sudo docker-compose up -d --build
 
 clean:
 	cd srcs && sudo docker-compose down --remove-orphans \

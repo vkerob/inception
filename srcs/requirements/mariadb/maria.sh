@@ -1,14 +1,13 @@
 #!/bin/sh
 
-mysqld -u root &
+echo "CREATE DATABASE IF NOT EXISTS ${DATABASE_NAME};
 
-echo test
-echo $SQL_DATABASE
+CREATE USER IF NOT EXISTS '${DATABASE_USR}'@'%';
 
-sleep 10s
-mysql -e "CREATE DATABASE IF NOT EXISTS `${SQL_DATABASE}`;"
-mysql -e "CREATE USER IF NOT EXISTS `${SQL_USER}`@'localhost' IDENTIFIED BY '${SQL_PASSWORD}';"
-mysql -e "GRANT ALL PRIVILEGES ON `${SQL_DATABASE}`.* TO `${SQL_USER}`@'%' IDENTIFIED BY '${SQL_PASSWORD}';"
-mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '${SQL_ROOT_PASSWORD}';"
-mysql -e "FLUSH PRIVILEGES;"
-mysqladmin -u root -p$SQL_ROOT_PASSWORD shutdown
+SET PASSWORD FOR '${DATABASE_USR}'@'%' = PASSWORD('${DATABASE_PASS}');
+
+GRANT ALL PRIVILEGES ON ${DATABASE_NAME}.* TO '${DATABASE_USR}'@'%';
+
+FLUSH PRIVILEGES;" > /init.sql
+
+exec /usr/bin/mariadbd --no-defaults --user=root --datadir=/var/lib/mysql --init-file=/init.sql
