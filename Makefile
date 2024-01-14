@@ -6,8 +6,7 @@ all:
 clean:
 	cd srcs && sudo docker-compose down --remove-orphans \
 	&& sudo docker volume rm srcs_mariadb \
-	&& sudo docker volume rm srcs_wordpress || true \
-	&& sudo docker network rm srcs_inception || true
+	&& sudo docker volume rm srcs_wordpress || true
 
 fclean: clean
 	cd srcs && sudo docker-compose down --rmi all --volumes --remove-orphans || true

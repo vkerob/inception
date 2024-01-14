@@ -10,7 +10,7 @@ if [ ! -f wp-config.php ]; then
 		--dbuser=${DATABASE_USR} \
 		--dbpass=${DATABASE_PASS} \
 		--dbhost=mariadb
-
+	
 	wp core install --url="${DOMAIN_NAME}" \
 		--title="inception" \
 		--admin_user=${ADMIN_NAME} \
